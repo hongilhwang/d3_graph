@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Insert title here</title>
+        <!-- Dependencies. -->
+        <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+
+        
+    </head>
+    <body>
+        <div></div>
+        <script>
+            var layout = [];
+            layout.width = 500;
+            layout.height = 100;
+            
+            var bar = [];
+            bar.width = 20;
+            bar.padding = 1;
+            
+            var dataset = [ 5, 10, 13, 19, 21, 25, 22, 18, 15, 13,
+                            11, 12, 15, 20, 18, 17, 16, 18, 23, 25 ];
+            
+            var svg = d3.select("body div")
+                        .append("svg")
+                        .attr("width", layout.width)
+                        .attr("height", layout.height);
+            
+            svg.selectAll("rect")
+                .data(dataset)
+                .enter()
+                .append("rect")
+                .attr("x", function(d, i){
+                	return i * ( layout.width / dataset.length );
+                })
+                .attr("y", function(d){
+                	return layout.height - d;
+                })
+                .attr("width", ( layout.width / dataset.length ) - bar.padding)
+                .attr("height", function(d){
+                	return d;
+                }).attr("fill",function(d) {
+                    return "rgb(0, 0, " + (d * 10) + ")";
+                });
+            
+            
+            svg.selectAll("text")
+            .data(dataset)
+            .enter()
+            .append("text")
+            .attr("x", function(d, i){
+                return i * ( layout.width / dataset.length );
+            })
+            .attr("y", function(d){
+                return layout.height - d;
+            })
+            .attr("font-family", "sans-serif")
+            .attr("font-size", "11px")
+            .text(function(d){return d;});
+        </script>
+    </body>
+</html>
